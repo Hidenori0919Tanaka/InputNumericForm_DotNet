@@ -1,0 +1,45 @@
+﻿@using NumericInputForm.Models
+
+@{
+    ViewBag.Title = "Index";
+    List<NumericModel> dateList = (List<NumericModel>)Session["DATA_LIST"];
+}
+
+<h2>Index</h2>
+
+<div class="py-4">
+    @Html.ActionLink("データをクリア（初期化）", "ClearData", null, new { @class = "btn btn-outline-primary" })
+</div>
+<div>
+    @Html.ActionLink("開始日付設定", "SelectDate", null, new { @class = "btn btn-outline-primary" })
+</div>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>日付</th>
+            <th>値</th>
+            <th>補間値</th>
+            <th>入力</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var d in dateList)
+        {
+            <tr>
+                <td>@d.Date.ToString("MM/dd")</td>
+                @if (d.InterpolationFlag)
+                {
+                    <td></td>
+                    <td>@d.Numeric</td>
+                }
+                else
+                {
+                    <td>@d.Numeric</td>
+                    <td></td>
+                }
+                <td>@Html.ActionLink("入力", "Edit", new { year = d.Date.Year, month = d.Date.Month, day = d.Date.Day })</td>
+            </tr>
+        }
+    </tbody>
+</table>
